@@ -1,0 +1,26 @@
+<!--pages/index2/index.wxml-->
+<view>
+  <view>
+    今天吃什么：{{todayData.eat}}
+  </view>
+  <view>
+    跑步：{{todayData.run}}
+  </view>
+  <view>
+    地铁早上：{{todayData.morning}}
+  </view>
+  <view>
+    地铁晚上：{{todayData.night}}
+  </view>
+  <view>
+    --- and then ---
+    {{todayData.thing}}
+
+    --- requires ---
+    {{todayData.requires}}
+  </view>
+  <button bindtap='find'>展示内容</button>
+  <button bindtap='add'>新增内容</button>
+  <button bindtap='update'>修改内容</button>
+  <button bindtap='remove'>删除内容</button>
+</view>
