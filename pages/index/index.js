@@ -37,16 +37,30 @@ Page({
       this.setData({todayData: todayData});
     } else { // 如果不是，则重新计算再显示
       const week = today.getDay();
+
+      // 今天吃什么
       const eat = eatM.find({ _id: week })[0];
+      // 跑步
       const run = runM.find({ _id: 1 })[0];
-      const morning_and_night = morningNightM.find({});
+      // 早晚地铁
+      const morning_and_night = [];
+      const requireMorningNight = requireM.find({morning_and_night: true}) || [];
+      if(requireMorningNight.length >= 2) {
+        morning_and_night = requireMorningNight;
+      } else if(requireMorningNight >= 1) {
+        morning_and_night[0] = requireMorningNight[0];
+        const randomData = morningNightM.find({}) || [];
+        morning_and_night[1] = randomData.length > 0 ? randomData[parseInt(Math.random() * randomData.length)] : '';
+      } else {
+        morning_and_night = morningNightM.find({});
+      }
       const morningIndex = parseInt(Math.random() * morning_and_night.length);
       const nightIndex = morningIndex >= morning_and_night.length ? morningIndex - 1 : morningIndex + 1;
       const morning = morning_and_night[morningIndex];
       const night = morning_and_night[nightIndex];
-      const things = thingsM.find({});
+      // 其他
+      const things = requireM.find({morning_and_night: false}) || thingsM.find({});
       const thing = things[parseInt(Math.random() * things.length)];
-      const requires = requireM.find({});
 
       const todayData = {
         eat: eat.name,
@@ -54,7 +68,6 @@ Page({
         morning: morning.name,
         night: night.name,
         thing: thing.name,
-        requires: requires,
         today: todayStr
       };
       this.setData({ todayData: todayData });
@@ -111,13 +124,17 @@ Page({
   
   },
 
+  finishTask: () => {
+    
+  },
+
   find: () => {
     const data = morningNightM.find({});
     console.log(data);
   },
 
   add: () => {
-    const insertres = requireM.insert({ name: 'mongo PPT', create_time: new Date(), update_time: new Date() });
+    const insertres = requireM.insert({ name: 'mongo PPT', morning_and_night: false, create_time: new Date(), update_time: new Date() });
     console.log(insertres)
   },
 
