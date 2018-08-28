@@ -1,1 +1,28 @@
 /* pages/index2/index.wxss */
+page {
+  background-image: url(http://static.xoedge.com/xo-registry/webui/images/gvr-background-image-desktop.svg); 
+}
+
+.index .item {
+  text-align: center;
+}
+
+.index .item text {
+  font-size: 28rpx;
+  color: #bbb;
+}
+
+.index button {
+  margin: 24rpx;
+  background: rgba(255, 255, 255, .7)
+}
+
+.index .rotate {
+  background: rgba(184,216,225, .7);
+  animation: rotate 0.6s;
+}
+
+@keyframes rotate {
+    0% {transform: rotateX(0deg)}
+    100% {transform: rotateX(360deg)}
+}
