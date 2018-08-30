@@ -71,13 +71,13 @@ Page({
       const random = [ randoms[parseInt(Math.random() * randoms.length)] ];
       // 周天
       const weekData = [];
-      const weekData[0] = sundayM.find({});
-      const weekData[1] = mondayM.find({});
-      const weekData[2] = tuesdayM.find({});
-      const weekData[3] = wednesdayM.find({});
-      const weekData[4] = thursdayM.find({});
-      const weekData[5] = fridayM.find({});
-      const weekData[6] = saturdayM.find({});
+      weekData[0] = sundayM.find({});
+      weekData[1] = mondayM.find({});
+      weekData[2] = tuesdayM.find({});
+      weekData[3] = wednesdayM.find({});
+      weekData[4] = thursdayM.find({});
+      weekData[5] = fridayM.find({});
+      weekData[6] = saturdayM.find({});
       const week = weekData[cur_week];
       // 指定日期
       const date = dateM.find({key_date: todayStr});
