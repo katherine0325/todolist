@@ -19,7 +19,7 @@ Page({
     things: [],
     requires: [],
     data_name: '',
-    data_collection: 'news',
+    data_collection: 'requires',
     data_morning_and_night: false,
   },
 
@@ -123,27 +123,36 @@ Page({
    * 添加数据提交
    */
   submit: function() {
-    if (this.data.data_collection === 'news') {
-      const todayData = wx.getStorageSync('todayData');
-      todayData.news.push(this.data.data_name);
-      wx.setStorageSync('todayData', todayData);
-    } else {
+    // if (this.data.data_collection === 'news') {
+    //   const todayData = wx.getStorageSync('todayData');
+    //   todayData.news.push(this.data.data_name);
+    //   wx.setStorageSync('todayData', todayData);
+    // } else {
+
+
+
       const data = {};
 
       if(!this.data.data_name) return;
 
       data.name = this.data.data_name;
-      if(this.data.data_collection === 'requires') {
-        data.morning_and_night = this.data.data_morning_and_night;
-      }
+      // if(this.data.data_collection === 'requires') {
+      //   data.morning_and_night = this.data.data_morning_and_night;
+      // }
 
       const insertM = new StorageDB(this.data.data_collection);
 
       const result = insertM.insert(data);
       console.log(result);
 
+      if (this.data.data_collection === 'requires') {
+        const todayData = wx.getStorageSync('todayData');
+        todayData.requires.push(result.data);
+        wx.setStorageSync('todayData', todayData);
+      }
+
       this.init();
-    }
+    // }
 
     wx.showToast({
       icon: 'none',

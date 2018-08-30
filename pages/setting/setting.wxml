@@ -3,8 +3,15 @@
   <view class="input">
     <input placeholder='添加数据' value="{{data_name}}" bindinput="changeName"/>
     <radio-group class="radio-group" bindchange="changeCollection">
-      <label class="radio">
+      <!-- <label class="radio">
         <radio value="news" checked="true" />今日任务
+      </label> -->
+        <label class="radio">
+        <radio value="requires" checked="true"/>计划任务
+        <!-- <label class="switch" style="display: {{}};float: right;">
+          是否地铁：
+          <switch bindchange='changeMorningNight' />
+        </label> -->
       </label>
       <label class="radio">
         <radio value="eats"/>今天吃什么
@@ -16,14 +23,7 @@
         <radio value="runs"/>跑步
       </label>
       <label class="radio">
-        <radio value="things"/>循环任务
-      </label>
-      <label class="radio">
-        <radio value="requires"/>优先任务
-        <label class="switch" style="display: {{}};float: right;">
-          是否地铁：
-          <switch bindchange='changeMorningNight' />
-        </label>
+        <radio value="things"/>随机任务
       </label>
     </radio-group>
 
@@ -49,13 +49,13 @@
       </view>
     </view>
     <view>
-      <view class="title">循环任务：</view>
+      <view class="title">随机任务：</view>
       <view>
         <button class="inline-btn" wx:key="*this" wx:for="{{things}}" data-collection="things" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
       </view>
     </view>
     <view>
-      <view class="title">优先任务：</view>
+    <view class="title">计划任务：</view>
       <view>
         <button class="inline-btn" wx:key="*this" wx:for="{{requires}}" data-collection="requires" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
       </view>

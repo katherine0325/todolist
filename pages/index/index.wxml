@@ -17,10 +17,10 @@
     <button class="{{animation === 'eat'? 'rotate' : ''}}" data-task="eat" data-name="{{todayData.eat}}" bindtap='finish'>{{todayData.eat}}</button>
   </view>
   <view class="item">
-    <text style="display: {{todayData.thing? '': 'none'}}"> --- and then --- </text>
+    <text style="display: {{todayData.thing || todayData.requires.length > 0? '': 'none'}}"> --- and then --- </text>
     <button class="{{animation === 'thing'? 'rotate' : ''}}" data-task="thing" data-name="{{todayData.thing}}" bindtap='finish'>{{todayData.thing}}</button>
   </view>
   <view class="item">
-    <button class="{{animation === item? 'rotate' : ''}}" wx:key="*this" wx:for="{{todayData.news}}" data-name="{{item}}" bindtap='removeNews'>{{item}}</button>
+    <button class="{{animation === 'requires-' + item._id? 'rotate' : ''}}" wx:key="*this" wx:for="{{todayData.requires}}" data-task="requires" data-id="{{item._id}}" bindtap='finish'>{{item.name}}</button>
   </view>
 </view>

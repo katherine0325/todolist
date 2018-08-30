@@ -22,7 +22,8 @@ Page({
       morning: "",
       night: "",
       thing: '',
-      news: [],
+      // news: [],\
+      requires: [],
       today: ''
     }
   },
@@ -57,32 +58,25 @@ Page({
       const eat = eatM.find({})[week];
       const run = runM.find({ _id: 1 })[0];
 
+      console.log('week')
+      console.log(week)
       // 地铁早晚
-      let morning_and_night = [];
-      const requireMorningNight = requireM.find({ morning_and_night: true }) || [];
-      if (requireMorningNight.length >= 2) {
-        morning_and_night = requires;
-      } else if (requireMorningNight.length == 1) {
-        morning_and_night[0] = requires[0];
-        const data = morningNightM.find({});
-        morning_and_night[1] = data[parseInt(Math.random() * data.length)];
-      } else {
-        morning_and_night = morningNightM.find({});
+      let morning, night;
+      if(week > 0 && week < 7) {
+        console.log(week)
+        const morning_and_night = morningNightM.find({});
+        const morningIndex = parseInt(Math.random() * morning_and_night.length);
+        const nightIndex = morningIndex >= morning_and_night.length - 1 ? morningIndex - 1 : morningIndex + 1;
+        morning = morning_and_night[morningIndex];
+        night = morning_and_night[nightIndex];
       }
-      const morningIndex = parseInt(Math.random() * morning_and_night.length);
-      const nightIndex = morningIndex >= morning_and_night.length - 1 ? morningIndex - 1 : morningIndex + 1;
-      const morning = morning_and_night[morningIndex];
-      const night = morning_and_night[nightIndex];
 
-      // 其他事项
-      let things = [];
-      const requireThings = requireM.find({ morning_and_night: false }) || [];
-      if (requireThings.length > 0) {
-        things = requireThings;
-      } else {
-        things = thingsM.find({});
-      }
+      // 随机任务
+      const things = thingsM.find({});
       const thing = things[parseInt(Math.random() * things.length)];
+
+      // 计划任务
+      const requires = requireM.find({}) || [];
 
       const todayData = {
         eat: eat? eat.name : '',
@@ -90,9 +84,10 @@ Page({
         morning: morning? morning.name : '',
         night: night? night.name : '',
         thing: thing? thing.name : '',
-        news: [],
+        requires: requires,
         today: todayStr
       };
+
       this.setData({ todayData: todayData });
       wx.setStorageSync('todayData', todayData);
     }
@@ -139,17 +134,22 @@ Page({
   finish: function(e) {
     const _this = this;
 
-    _this.setData({ animation: e.currentTarget.dataset.task });
+    _this.setData({ animation: e.currentTarget.dataset.task == 'requires' ? 'requires-' + e.currentTarget.dataset.id : e.currentTarget.dataset.task });
     
     setTimeout(function() {
       _this.setData({ animation: '' });
       const todayData = _this.data.todayData;
-      todayData[e.currentTarget.dataset.task] = '';
+
+      if(e.currentTarget.dataset.task === 'requires') {
+        todayData.requires = _.findExclude(todayData.requires, {_id: e.currentTarget.dataset.id})
+      } else {
+        todayData[e.currentTarget.dataset.task] = '';
+      }
       _this.setData({ todayData: todayData });
       wx.setStorageSync('todayData', todayData);
       // remove require
-      const result = requireM.remove({ name: e.currentTarget.dataset.name });
-      console.log(result)
+      // const result = requireM.remove({ name: e.currentTarget.dataset.name });
+      // console.log(result)
     }, 800);
 
   },
@@ -157,18 +157,18 @@ Page({
   /**
    * 删除今日添加事项
    */
-  removeNews: function(e) {
-    const _this = this;
+  // removeNews: function(e) {
+  //   const _this = this;
 
-    _this.setData({animation: e.currentTarget.dataset.name});
+  //   _this.setData({animation: e.currentTarget.dataset.name});
 
-    setTimeout(function() {
-      _this.setData({ animation: '' });
-      const todayData = _this.data.todayData;
-      todayData.news.splice(todayData.news.indexOf(e.currentTarget.dataset.name), 1);
-      _this.setData({ todayData: todayData });
-      wx.setStorageSync('todayData', todayData);
-    }, 800);
-  }
+  //   setTimeout(function() {
+  //     _this.setData({ animation: '' });
+  //     const todayData = _this.data.todayData;
+  //     todayData.news.splice(todayData.news.indexOf(e.currentTarget.dataset.name), 1);
+  //     _this.setData({ todayData: todayData });
+  //     wx.setStorageSync('todayData', todayData);
+  //   }, 800);
+  // }
 
 })
