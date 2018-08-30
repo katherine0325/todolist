@@ -1,0 +1,67 @@
+<!--pages/setting/setting.wxml-->
+<view class="setting">
+  <view class="input">
+    <input placeholder='添加数据' value="{{data_name}}" bindinput="changeName"/>
+    <radio-group class="radio-group" bindchange="changeCollection">
+      <label class="radio">
+        <radio value="news" checked="true" />今日任务
+      </label>
+      <label class="radio">
+        <radio value="eats"/>今天吃什么
+      </label>
+      <label class="radio">
+        <radio value="morningnights"/>地铁早晚
+      </label>
+      <label class="radio">
+        <radio value="runs"/>跑步
+      </label>
+      <label class="radio">
+        <radio value="things"/>循环任务
+      </label>
+      <label class="radio">
+        <radio value="requires"/>优先任务
+        <label class="switch" style="display: {{}};float: right;">
+          是否地铁：
+          <switch bindchange='changeMorningNight' />
+        </label>
+      </label>
+    </radio-group>
+
+    <button type="primary" bindtap='submit'>确定</button>
+  </view>
+  <view class="list">
+    <view>
+      <view class="title">今天吃什么：</view>
+      <view>
+        <button class="inline-btn" wx:key="*this" wx:for="{{eats}}" data-collection="eats" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+      </view>
+    </view>
+    <view>
+      <view class="title">地铁早晚：</view>
+      <view>
+        <button class="inline-btn" wx:key="*this" wx:for="{{morning_and_nights}}" data-collection="morningnights" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+      </view>
+    </view>
+    <view>
+      <view class="title">跑步：</view>
+      <view>
+        <button class="inline-btn" wx:key="*this" wx:for="{{runs}}" data-collection="runs" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+      </view>
+    </view>
+    <view>
+      <view class="title">循环任务：</view>
+      <view>
+        <button class="inline-btn" wx:key="*this" wx:for="{{things}}" data-collection="things" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+      </view>
+    </view>
+    <view>
+      <view class="title">优先任务：</view>
+      <view>
+        <button class="inline-btn" wx:key="*this" wx:for="{{requires}}" data-collection="requires" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+      </view>
+    </view>
+  </view>
+  <view class="reload">
+    <button bindtap='removeTodayData'>reload</button>
+  </view>
+</view>

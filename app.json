@@ -2,12 +2,25 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/index2/index"
+    "pages/index2/index",
+    "pages/setting/setting"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "list"
+      },
+      {
+        "pagePath": "pages/setting/setting",
+        "text": "set"
+      }
+    ]
   }
 }

@@ -1,26 +1,26 @@
 <!--pages/index2/index.wxml-->
-<view>
-  <view>
-    今天吃什么：{{todayData.eat}}
+<view class="index">
+  <view class="item">
+    <text style="display: {{!todayData.run && !todayData.eat && !todayData.morning && !todayData.night && !todayData.thing ? 'none': ''}}"> --- 跑步：今日目标{{weight}} --- </text>
+    <button class="{{animation === 'run'? 'rotate' : ''}}" data-task="run" data-name="{{todayData.run}}" bindtap='finish'>{{todayData.run}}</button>
   </view>
-  <view>
-    跑步：{{todayData.run}}
+  <view class="item">
+    <text style="display: {{todayData.morning? '': 'none'}}"> --- 地铁早上 --- </text>
+    <button class="{{animation === 'morning'? 'rotate' : ''}}" data-task="morning" data-name="{{todayData.morning}}" bindtap='finish'>{{todayData.morning}}</button>
   </view>
-  <view>
-    地铁早上：{{todayData.morning}}
+  <view class="item">
+    <text style="display: {{todayData.night? '': 'none'}}"> --- 地铁晚上 --- </text>
+    <button class="{{animation === 'night'? 'rotate' : ''}}" data-task="night" data-name="{{todayData.night}}" bindtap='finish'>{{todayData.night}}</button>
   </view>
-  <view>
-    地铁晚上：{{todayData.night}}
+  <view class="item">
+    <text style="display: {{todayData.eat? '': 'none'}}"> --- 今天吃什么 --- </text>
+    <button class="{{animation === 'eat'? 'rotate' : ''}}" data-task="eat" data-name="{{todayData.eat}}" bindtap='finish'>{{todayData.eat}}</button>
   </view>
-  <view>
-    --- and then ---
-    {{todayData.thing}}
-
-    --- requires ---
-    {{todayData.requires}}
+  <view class="item">
+    <text style="display: {{todayData.thing? '': 'none'}}"> --- and then --- </text>
+    <button class="{{animation === 'thing'? 'rotate' : ''}}" data-task="thing" data-name="{{todayData.thing}}" bindtap='finish'>{{todayData.thing}}</button>
   </view>
-  <button bindtap='find'>展示内容</button>
-  <button bindtap='add'>新增内容</button>
-  <button bindtap='update'>修改内容</button>
-  <button bindtap='remove'>删除内容</button>
+  <view class="item">
+    <button class="{{animation === item? 'rotate' : ''}}" wx:key="*this" wx:for="{{todayData.news}}" data-name="{{item}}" bindtap='removeNews'>{{item}}</button>
+  </view>
 </view>

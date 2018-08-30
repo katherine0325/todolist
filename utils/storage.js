@@ -11,7 +11,7 @@ class StorageDB {
   }
 
   insert(data) {
-    const insertData = {};
+    const insertData = {create_time: new Date(), update_time: new Date()};
     const datas = wx.getStorageSync(this.collection) || [];
     if(datas.length >= 1) {
       Object.assign(insertData, { _id: datas[datas.length - 1]._id + 1}, data);
@@ -20,10 +20,11 @@ class StorageDB {
     }
     datas.push(insertData);
     wx.setStorageSync(this.collection, datas);
-    return { ok: 1, data: insertData };
+    return { ok: 1, collection: this.collection, data: insertData };
   }
 
   update(query, updateData) {
+    updateData.update_time = new Date();
     const datas = wx.getStorageSync(this.collection) || [];
     if(datas.length === 0) {
       return {ok: 1, updateRows: 0};
@@ -35,7 +36,7 @@ class StorageDB {
       }
     }
     wx.setStorageSync(this.collection, datas);
-    return {ok: 1, updateRows: 1};
+    return { ok: 1, updateRows: 1, collection: this.collection};
   }
 
   remove(query) {
@@ -46,7 +47,7 @@ class StorageDB {
     } else {
       const results = _.findExclude(datas, query);
       wx.setStorageSync(this.collection, results);
-      return {ok: 1, removeRows: datas.length - results.length};
+      return { ok: 1, removeRows: datas.length - results.length, collection: this. collection};
     }
   }
 }
