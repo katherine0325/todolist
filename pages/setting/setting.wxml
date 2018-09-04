@@ -31,33 +31,33 @@
   </view>
   <view class="list">
     <view>
+      <view class="title">计划任务：</view>
+        <view>
+          <button size="mini" class="inline-btn" wx:key="*this" wx:for="{{requires}}" data-collection="requires" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+        </view>
+    </view>
+    <view>
+      <view class="title">随机任务：</view>
+      <view>
+        <button size="mini" class="inline-btn" wx:key="*this" wx:for="{{things}}" data-collection="things" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+      </view>
+    </view>
+    <view>
       <view class="title">今天吃什么：</view>
       <view>
-        <button class="inline-btn" wx:key="*this" wx:for="{{eats}}" data-collection="eats" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+        <button size="mini" class="inline-btn" wx:key="*this" wx:for="{{eats}}" data-collection="eats" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
       </view>
     </view>
     <view>
       <view class="title">地铁早晚：</view>
       <view>
-        <button class="inline-btn" wx:key="*this" wx:for="{{morning_and_nights}}" data-collection="morningnights" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+        <button size="mini" class="inline-btn" wx:key="*this" wx:for="{{morning_and_nights}}" data-collection="morningnights" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
       </view>
     </view>
     <view>
       <view class="title">跑步：</view>
       <view>
-        <button class="inline-btn" wx:key="*this" wx:for="{{runs}}" data-collection="runs" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
-      </view>
-    </view>
-    <view>
-      <view class="title">随机任务：</view>
-      <view>
-        <button class="inline-btn" wx:key="*this" wx:for="{{things}}" data-collection="things" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
-      </view>
-    </view>
-    <view>
-    <view class="title">计划任务：</view>
-      <view>
-        <button class="inline-btn" wx:key="*this" wx:for="{{requires}}" data-collection="requires" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
+        <button size="mini" class="inline-btn" wx:key="*this" wx:for="{{runs}}" data-collection="runs" data-id="{{item._id}}" bindtap='delete'>{{item.name}}</button>
       </view>
     </view>
   </view>

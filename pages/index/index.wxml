@@ -1,7 +1,7 @@
 <!--pages/index2/index.wxml-->
 <view class="index">
   <view class="item">
-    <text style="display: {{!todayData.run && !todayData.eat && !todayData.morning && !todayData.night && !todayData.thing ? 'none': ''}}"> --- 跑步：今日目标{{weight}} --- </text>
+    <text style="display: {{!todayData.run && !todayData.eat && !todayData.morning && !todayData.night && !todayData.thing && todayData.requires.length == 0 ? 'none': ''}}"> --- 跑步：今日目标{{weight}} --- </text>
     <button class="{{animation === 'run'? 'rotate' : ''}}" data-task="run" data-name="{{todayData.run}}" bindtap='finish'>{{todayData.run}}</button>
   </view>
   <view class="item">
