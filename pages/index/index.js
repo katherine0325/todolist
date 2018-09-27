@@ -24,7 +24,6 @@ Page({
       morning: "",
       night: "",
       thing: '',
-      // news: [],\
       requires: [],
       today: ''
     }
@@ -183,17 +182,47 @@ Page({
     wx.setStorageSync('todayData', todayData);
   },
 
-  /**
+  /** -- 如果没有问题的话就删除
    * “完成删除”按钮 for 随机
    */
-  deleteRandom: function() {
+  // deleteRandom: function() {
+  //   const _this = this;
+
+  //   const todayData = _this.data.todayData;
+  //   todayData.thing = '';
+  //   _this.setData({ todayData: todayData, isShowMenu: false, curTask: null, curMenuId: null });
+  //   wx.setStorageSync('todayData', todayData);
+  //   thingsM.remove({name: _this.data.curName});
+  // },
+
+  /**
+   * “放入随机”按钮 for 任务
+   */
+  addRandom: function() {
     const _this = this;
 
     const todayData = _this.data.todayData;
-    todayData.thing = '';
-    _this.setData({ todayData: todayData, isShowMenu: false, curTask: null, curMenuId: null });
+    todayData.requires = _.findExclude(todayData.requires, { _id: _this.data.curMenuId });
+    _this.setData({ todayData: todayData, isShowMenu: false, curMenuId: null });
     wx.setStorageSync('todayData', todayData);
-    thingsM.remove({name: _this.data.curName});
+
+    const data = _.find(todayData.requires, {_id: _this.data.curMenuId});
+    thingsM.insert(data);
+  },
+
+  /**
+   * "换一换"按钮 for 随机
+   */
+  changeTask: function() {
+    const _this = this;
+
+    const things = thingsM.find({});
+    const thing = things[parseInt(Math.random() * things.length)];
+
+    const todayData = _this.data.todayData;
+    todayData.thing = thing? thing.name : '';
+    _this.setData({ todayData: todayData, isShowMenu: false, curMenuId: null });
+    wx.setStorageSync('todayData', todayData);
   }
 
 })

@@ -26,6 +26,7 @@
   </view>
 </view>
 <view class="index-menu" bindtap='hideMenu' style="display: {{isShowMenu? '' : 'none'}}">
-  <view style="display: {{curTask == 'thing'? '' : 'none'}};background: #58ABEF;" catchtap='deleteRandom'>完成删除</view>
+  <view style="display: {{curTask == 'thing'? '' : 'none'}};background: #58ABEF;" catchtap='changeTask'>换一换</view>
   <view style="display: {{curTask == 'requires'? '' : 'none'}};background: #70CB4C;" catchtap='addTomorrow'>明天再说</view>
+  <view style="display: {{curTask == 'requires'? '' : 'none'}};background: #58ABEF;" catchtap='addRamdom'>放入随机</view>
 </view>
