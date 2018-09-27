@@ -17,10 +17,15 @@
     <button class="{{animation === 'eat'? 'rotate' : ''}}" data-task="eat" data-name="{{todayData.eat}}" bindtap='finish'>{{todayData.eat}}</button>
   </view>
   <view class="item">
-    <text style="display: {{todayData.thing || todayData.requires.length > 0? '': 'none'}}"> --- and then --- </text>
-    <button class="{{animation === 'thing'? 'rotate' : ''}}" data-task="thing" data-name="{{todayData.thing}}" bindtap='finish'>{{todayData.thing}}</button>
+    <text style="display: {{todayData.thing? '': 'none'}}"> --- 随机 --- </text>
+    <button class="{{animation === 'thing'? 'rotate' : ''}}" data-task="thing" data-name="{{todayData.thing}}" bindtap='finish' bindlongpress="showMenu">{{todayData.thing}}</button>
   </view>
   <view class="item">
-    <button class="{{animation === 'requires-' + item._id? 'rotate' : ''}}" wx:key="*this" wx:for="{{todayData.requires}}" data-task="requires" data-id="{{item._id}}" bindtap='finish'>{{item.name}}</button>
+    <text style="display: {{todayData.requires.length > 0? '': 'none'}}"> --- 任务 --- </text>
+    <button class="{{animation === 'requires-' + item._id? 'rotate' : ''}}" wx:key="*this" wx:for="{{todayData.requires}}" data-task="requires" data-id="{{item._id}}" bindtap='finish' bindlongpress="showMenu">{{item.name}}</button>
   </view>
+</view>
+<view class="index-menu" bindtap='hideMenu' style="display: {{isShowMenu? '' : 'none'}}">
+  <view style="display: {{curTask == 'thing'? '' : 'none'}};background: #58ABEF;" catchtap='deleteRandom'>完成删除</view>
+  <view style="display: {{curTask == 'requires'? '' : 'none'}};background: #70CB4C;" catchtap='addTomorrow'>明天再说</view>
 </view>

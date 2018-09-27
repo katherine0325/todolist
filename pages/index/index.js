@@ -16,6 +16,8 @@ Page({
   data: {
     weight: (128.5 - ((new Date()).getTime() - (new Date(2018, 7, 26)).getTime()) / (1000 * 60 * 60 * 24) * (8.5 / 36)).toFixed(2),
     animation: '',
+    isShowMenu: false,
+    curMenuId: null,
     todayData: {
       eat: "",
       run: "",
@@ -58,8 +60,6 @@ Page({
       const eat = eatM.find({})[week];
       const run = runM.find({ _id: 1 })[0];
 
-      console.log('week')
-      console.log(week)
       // 地铁早晚
       let morning, night;
       if(week > 0 && week < 7) {
@@ -141,34 +141,59 @@ Page({
       const todayData = _this.data.todayData;
 
       if(e.currentTarget.dataset.task === 'requires') {
-        todayData.requires = _.findExclude(todayData.requires, {_id: e.currentTarget.dataset.id})
+        todayData.requires = _.findExclude(todayData.requires, {_id: e.currentTarget.dataset.id});
+        requireM.remove({ _id: e.currentTarget.dataset.id });
       } else {
         todayData[e.currentTarget.dataset.task] = '';
       }
       _this.setData({ todayData: todayData });
       wx.setStorageSync('todayData', todayData);
-      // remove require
-      // const result = requireM.remove({ name: e.currentTarget.dataset.name });
-      // console.log(result)
     }, 800);
 
   },
 
   /**
-   * 删除今日添加事项
+   * 显示菜单按钮
    */
-  // removeNews: function(e) {
-  //   const _this = this;
+  showMenu: function (e) {
+    this.setData({
+      isShowMenu: true,
+      curTask: e.currentTarget.dataset.task,
+      curMenuId: e.currentTarget.dataset.id || null,
+      curName: e.currentTarget.dataset.name || null,
+    });
+  },
 
-  //   _this.setData({animation: e.currentTarget.dataset.name});
+  /**
+   * 隐藏菜单按钮
+   */
+  hideMenu: function () {
+    this.setData({ isShowMenu: false, curTask: null, curMenuId: null, curName: null });
+  },
 
-  //   setTimeout(function() {
-  //     _this.setData({ animation: '' });
-  //     const todayData = _this.data.todayData;
-  //     todayData.news.splice(todayData.news.indexOf(e.currentTarget.dataset.name), 1);
-  //     _this.setData({ todayData: todayData });
-  //     wx.setStorageSync('todayData', todayData);
-  //   }, 800);
-  // }
+  /**
+   * "明天再说"按钮 for 任务
+   */
+  addTomorrow: function () {
+    const _this = this;
+
+    const todayData = _this.data.todayData;
+    todayData.requires = _.findExclude(todayData.requires, { _id: _this.data.curMenuId });
+    _this.setData({ todayData: todayData, isShowMenu: false, curMenuId: null });
+    wx.setStorageSync('todayData', todayData);
+  },
+
+  /**
+   * “完成删除”按钮 for 随机
+   */
+  deleteRandom: function() {
+    const _this = this;
+
+    const todayData = _this.data.todayData;
+    todayData.thing = '';
+    _this.setData({ todayData: todayData, isShowMenu: false, curTask: null, curMenuId: null });
+    wx.setStorageSync('todayData', todayData);
+    thingsM.remove({name: _this.data.curName});
+  }
 
 })
